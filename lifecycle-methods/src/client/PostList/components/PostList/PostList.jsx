@@ -1,48 +1,53 @@
 import {Component} from "react";
 
+import {getAllPosts} from "../../../../services/posts";
 class PostList extends Component {
     state = {
         posts: [],
-        loading: false
+        loading: false,
+        error: null
     }
 
     componentDidMount(){
-        const productsRequest = fetch("https://jsonplaceholder.typicode.com/posts");
-        productsRequest
-            .then(response => response.json())
-            .then(result => {
-                this.setState({
-                    posts: result
-                })
-            })
-            .catch(error => console.log(error))
+        this.fetchPosts();
     }
 
-    componentDidUpdate(){
-        const {loading} = this.state;
-        if(loading){
-            const productsRequest = fetch("https://jsonplaceholder.typicode.com/posts");
-            productsRequest
-                .then(response => response.json())
-                .then(result => {
-                    this.setState({
-                        posts: result,
-                        loading: false
-                    })
-                })
-                .catch(error => console.log(error))
+    componentDidUpdate(prevProps, prevState, spanshot){
+        if(this.state.loading !== prevState.loading) {
+            const {loading} = this.state;
+            if(loading){
+                this.fetchPosts();
+            }
         }
     }
 
-    fetchNewPosts = ()=>{
+    fetchPosts(){
+        // const productsRequest = fetch("https://jsonplaceholder.typicode.com/posts");
+        const productsRequest = getAllPosts();
+        
+        productsRequest
+            .then(({data}) => {
+                this.setState({
+                    posts: data
+                })
+            })
+            .catch(error => this.setState({
+                error
+            }))
+            .finally(data => this.setState({
+                loading: false
+            }))
+    }
+
+    getNewPosts = ()=>{
         this.setState({
             loading: true
         })
     }
 
     render(){
-        const {posts, loading} = this.state;
-        const {fetchNewPosts} = this;
+        const {posts, loading, error} = this.state;
+        const {getNewPosts} = this;
         const postElements = posts.map(item => (
             <li key={`${item.id}`}>
                 <h4>{item.title}</h4>
@@ -52,9 +57,10 @@ class PostList extends Component {
         return (
             <>
             <h2>Список постов
-                <button onClick={fetchNewPosts}>Обновить посты</button>
+                <button onClick={getNewPosts}>Обновить посты</button>
             </h2>
-            {loading && <p>Loading ....</p>}
+            {loading && !error && <p>Loading ....</p>}
+            {error && <p>{error.message}.</p>}
             <ol>
                 {postElements}
             </ol>

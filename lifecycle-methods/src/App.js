@@ -5,8 +5,8 @@ import Timer from "./client/Timer/components/Timer";
 function App() {
   return (
     <div className="App">
-      <ProductList />
-      {/* <PostList /> */}
+      {/* <ProductList /> */}
+      <PostList />
       {/* <Timer /> */}
     </div>
   );

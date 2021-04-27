@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Cats from "./client/Cats/components/Cats";
+import UserCard from "./shared/UserCard";
+import ErrorBoundary from "./shared/ErrorBoundary";
+
+const userProps = {
+  name: {},
+  lastName: "Брячеславович",
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+        {/* <Cats /> */}
+        <UserCard {...userProps} />
+      </div>
+    </ErrorBoundary>
   );
 }
 
