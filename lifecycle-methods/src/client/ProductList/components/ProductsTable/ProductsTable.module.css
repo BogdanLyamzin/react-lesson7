@@ -1,0 +1,15 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid;
+}
+
+.ceil {
+    text-align: center;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.btn {
+    cursor: pointer;
+}

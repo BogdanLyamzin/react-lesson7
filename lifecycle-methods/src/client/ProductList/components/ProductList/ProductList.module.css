@@ -1,0 +1,11 @@
+.productList {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px
+}
+
+.productListRow {
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 10px;
+}
